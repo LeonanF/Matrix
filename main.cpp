@@ -4,11 +4,10 @@
 
 int main() {
 
-	Matrix<int> A = { {1,2},{3,4} };
-	Matrix<int> B = { {1,2},{3,4} };
-	auto C = A + B;
+	Matrix<int> A = { {1,2}, {3,4} };
 
-	std::cout << C;
+	std::cout << A * 2;
+	std::cout << 2 * A;
 
 	return 0;
 }

@@ -29,41 +29,50 @@ public:
 	// Operações matemáticas entre matrizes
 	template<typename U>
 	Matrix<decltype(T() + U())> operator+(const Matrix<U>& rhs);
+
 	template<typename U>
-	Matrix<T> operator-(const Matrix<T>& rhs);
+	Matrix<decltype(T() + U())> operator-(const Matrix<U>& rhs);
+
 	template<typename U>
-	Matrix<T> operator*(const Matrix<T>& rhs);
+	Matrix<decltype(T() + U())> operator*(const Matrix<U>& rhs);
+
 	template<typename U>
-	Matrix<T>& operator+=(const Matrix<T>& rhs);
+	Matrix<decltype(T() + U())> operator+=(const Matrix<U>& rhs);
+
 	template<typename U>
-	Matrix<T>& operator-=(const Matrix<T>& rhs);
+	Matrix<decltype(T() + U())> operator-=(const Matrix<U>& rhs);
+
 	template<typename U>
-	Matrix<T>& operator*=(const Matrix<T>& rhs);
-	template<typename U>
+	Matrix<decltype(T() + U())> operator*=(const Matrix<U>& rhs);
+
 	Matrix<T> transpose();
 
-	// Operações matemáticas de matrizes com escalares
+	// Operações matemáticas de matrizes com escalares à direita
 	template<typename U>
-	Matrix<T> operator+(const T& rhs);
-	template<typename U>
-	Matrix<T> operator-(const T& rhs);
-	template<typename U>
-	Matrix<T> operator*(const T& rhs);
-	template<typename U>
-	Matrix<T> operator/(const T& rhs);
-	template<typename U>
-	Matrix<T>& operator+=(const T& rhs);
-	template<typename U>
-	Matrix<T>& operator-=(const T& rhs);
-	template<typename U>
-	Matrix<T>& operator*=(const T& rhs);
-	template<typename U>
-	Matrix<T>& operator/=(const T& rhs);
+	Matrix<decltype(T() + U())> operator+(const U& rhs);
 
+	template<typename U>
+	Matrix<decltype(T() + U())> operator-(const U& rhs);
+
+	template<typename U>
+	Matrix<decltype(T() + U())> operator*(const U& rhs);
+
+	template<typename U>
+	Matrix<decltype(T() + U())> operator/(const U& rhs);
+
+	template<typename U>
+	Matrix<decltype(T() + U())> operator+=(const U& rhs);
+
+	template<typename U>
+	Matrix<decltype(T() + U())> operator-=(const U& rhs);
+
+	template<typename U>
+	Matrix<decltype(T() + U())> operator*=(const U& rhs);
+
+	template<typename U>
+	Matrix<decltype(T() + U())> operator/=(const U& rhs);
 
 	// Operações matriz/vetor
-	template<typename U>
-	std::vector<T> operator*(const std::vector<T>& rhs);
 	std::vector<T> diagVec();
 
 	// Acessar os elementos individualmente
@@ -72,9 +81,17 @@ public:
 
 	unsigned get_rows() const;
 	unsigned get_cols() const;
-	
 };
 
 // Operador de saída <<
 template<typename T>
 std::ostream& operator<<(std::ostream& os, const Matrix<T>& rhs);
+
+
+// Sobrecarga do operador para permitir adicionar um escalar à esquerda da matriz
+template<typename T, typename U>
+Matrix<decltype(T() + U())> operator+(const U& lhs, const Matrix<T>& rhs);
+
+// Sobrecarga do operador para permitir adicionar um escalar à esquerda da matriz
+template<typename T, typename U>
+Matrix<decltype(T() + U())> operator*(const U& lhs, const Matrix<T>& rhs);

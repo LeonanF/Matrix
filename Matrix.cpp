@@ -81,7 +81,7 @@ Matrix<decltype(T() + U())> Matrix<T>::operator+(const Matrix<U>& rhs)
 	if (rhs.get_cols() != this->cols || rhs.get_rows() != this->rows)
 		throw std::invalid_argument("As matrizes não podem ser somadas porque são de ordens diferentes.");
 
-	Matrix resultante(this->rows, this->cols, decltype(T()+U())());
+	Matrix<decltype(T() + U())> resultante(this->rows, this->cols, decltype(T()+U())());
 
 	for (unsigned i = 0; i < this->rows; i++) {
 		for (unsigned j = 0; j < this->cols; j++) {
@@ -96,13 +96,13 @@ Matrix<decltype(T() + U())> Matrix<T>::operator+(const Matrix<U>& rhs)
 // Subtração de duas matrizes
 template<typename T>
 template<typename U>
-Matrix<T> Matrix<T>::operator-(const Matrix<T>& rhs)
+Matrix<decltype(T() + U())> Matrix<T>::operator-(const Matrix<U>& rhs)
 {
 
 	if (rhs.get_cols() != this->cols || rhs.get_rows() != this->rows)
 		throw std::invalid_argument("As matrizes não podem ser subtraídas porque são de ordens diferentes.");
 
-	Matrix resultante(this->rows, this->cols, decltype(T() + U())());
+	Matrix<decltype(T() + U())> resultante(this->rows, this->cols, decltype(T() + U())());
 
 	for (unsigned i = 0; i < this->rows; i++) {
 		for (unsigned j = 0; j < this->cols; j++) {
@@ -116,7 +116,8 @@ Matrix<T> Matrix<T>::operator-(const Matrix<T>& rhs)
 // Multiplicação de duas matrizes
 template<typename T>
 template<typename U>
-Matrix<T> Matrix<T>::operator*(const Matrix<T>& rhs)
+Matrix<decltype(T() + U())> Matrix<T>::operator*(const Matrix<U>& rhs)
+
 {
 
 	if (this->cols != rhs.get_rows())
@@ -125,7 +126,7 @@ Matrix<T> Matrix<T>::operator*(const Matrix<T>& rhs)
 	unsigned rows = this->rows;
 	unsigned cols = rhs.get_cols();
 
-	Matrix resultante(rows, cols, decltype(T() + U())());
+	Matrix<decltype(T() + U())> resultante(rows, cols, decltype(T() + U())());
 
 	for (unsigned i = 0; i < rows; i++) {
 		for (unsigned j = 0; j < cols; j++) {
@@ -141,7 +142,7 @@ Matrix<T> Matrix<T>::operator*(const Matrix<T>& rhs)
 // Sobrescrição dessa matriz com adição de outra
 template<typename T>
 template<typename U>
-Matrix<T>& Matrix<T>::operator+=(const Matrix<T>& rhs)
+Matrix<decltype(T() + U())> Matrix<T>::operator+=(const Matrix<U>& rhs)
 {
 
 	if (rhs.get_cols() != this->cols || rhs.get_rows() != this->rows)
@@ -156,14 +157,14 @@ Matrix<T>& Matrix<T>::operator+=(const Matrix<T>& rhs)
 // Sobrescrição dessa matriz com subtração de outra
 template<typename T>
 template<typename U>
-Matrix<T>& Matrix<T>::operator-=(const Matrix<T>& rhs)
+Matrix<decltype(T() + U())> Matrix<T>::operator-=(const Matrix<U>& rhs)
 {
 
 	if (rhs.get_cols() != this->cols || rhs.get_rows() != this->rows)
 		throw std::invalid_argument("As matrizes não podem ser subtraídas porque são de ordens diferentes.");
 
 
-	Matrix resultante = (*this)- rhs;
+	Matrix resultante = (*this) - rhs;
 	(*this) = resultante;
 	return *this;
 }
@@ -171,7 +172,7 @@ Matrix<T>& Matrix<T>::operator-=(const Matrix<T>& rhs)
 // Sobrescrição dessa matriz com multiplicação de outra
 template<typename T>
 template<typename U>
-Matrix<T>& Matrix<T>::operator*=(const Matrix<T>& rhs)
+Matrix<decltype(T() + U())> Matrix<T>::operator*=(const Matrix<U>& rhs)
 {
 	if (this->cols != rhs.get_rows())
 		throw std::invalid_argument("As matrizes não podem ser multiplicadas porque o número de colunas da primeira é diferente do número de linhas da segunda.");
@@ -184,13 +185,12 @@ Matrix<T>& Matrix<T>::operator*=(const Matrix<T>& rhs)
 
 // Cálculo da matriz transposta
 template<typename T>
-template<typename U>
 Matrix<T> Matrix<T>::transpose()
 {
 	unsigned new_rows = this->cols;
 	unsigned new_cols = this->rows;
 
-	Matrix resultante(new_rows, new_cols, decltype(T() + U())());
+	Matrix resultante(new_rows, new_cols, T());
 
 	for (unsigned i = 0; i < this->get_rows(); i++) {
 		for (unsigned j = 0; j < this->get_cols(); j++) {
@@ -205,9 +205,9 @@ Matrix<T> Matrix<T>::transpose()
 // Adição de matriz com escalar
 template<typename T>
 template<typename U>
-Matrix<T> Matrix<T>::operator+(const T& rhs)
+Matrix<decltype(T() + U())> Matrix<T>::operator+(const U& rhs)
 {
-	Matrix resultante(this->rows, this->cols, decltype(T() + U())());
+	Matrix<decltype(T()+U())> resultante(this->rows, this->cols, decltype(T() + U())());
 
 	for (unsigned i = 0; i < this->rows; i++) {
 		for (unsigned j = 0; j < this->cols; j++) {
@@ -218,12 +218,13 @@ Matrix<T> Matrix<T>::operator+(const T& rhs)
 	return resultante;
 }
 
+
 // Subtração de matriz com escalar
 template<typename T>
 template<typename U>
-Matrix<T> Matrix<T>::operator-(const T& rhs)
+Matrix<decltype(T() + U())> Matrix<T>::operator-(const U& rhs)
 {
-	Matrix resultante(this->rows, this->cols, decltype(T() + U())());
+	Matrix<decltype(T() + U())> resultante(this->rows, this->cols, decltype(T() + U())());
 
 	for (unsigned i = 0; i < this->rows; i++) {
 		for (unsigned j = 0; j < this->cols; j++) {
@@ -237,9 +238,9 @@ Matrix<T> Matrix<T>::operator-(const T& rhs)
 // Multiplicação de matriz com escalar
 template<typename T>
 template<typename U>
-Matrix<T> Matrix<T>::operator*(const T& rhs)
+Matrix<decltype(T() + U())> Matrix<T>::operator*(const U& rhs)
 {
-	Matrix resultante(this->rows, this->cols, decltype(T() + U())());
+	Matrix<decltype(T() + U())> resultante(this->rows, this->cols, decltype(T() + U())());
 
 	for (unsigned i = 0; i < this->rows; i++) {
 		for (unsigned j = 0; j < this->cols; j++) {
@@ -253,9 +254,9 @@ Matrix<T> Matrix<T>::operator*(const T& rhs)
 // Divisão de matriz com escalar
 template<typename T>
 template<typename U>
-Matrix<T> Matrix<T>::operator/(const T& rhs)
+Matrix<decltype(T() + U())> Matrix<T>::operator/(const U& rhs)
 {
-	Matrix resultante(this->rows, this->cols, decltype(T() + U())());
+	Matrix<decltype(T() + U())> resultante(this->rows, this->cols, decltype(T() + U())());
 
 	for (unsigned i = 0; i < this->rows; i++) {
 		for (unsigned j = 0; j < this->cols; j++) {
@@ -268,8 +269,8 @@ Matrix<T> Matrix<T>::operator/(const T& rhs)
 
 // Sobrescrição com adição de escalar
 template<typename T>
-template<typename U>	
-Matrix<T>& Matrix<T>::operator+=(const T& rhs)
+template<typename U>
+Matrix<decltype(T() + U())> Matrix<T>::operator+=(const U& rhs)
 {
 	Matrix resultante = (*this) + rhs;
 
@@ -282,7 +283,7 @@ Matrix<T>& Matrix<T>::operator+=(const T& rhs)
 // Sobrescrição com subtração de escalar
 template<typename T>
 template<typename U>
-Matrix<T>& Matrix<T>::operator-=(const T& rhs)
+Matrix<decltype(T() + U())> Matrix<T>::operator-=(const U& rhs)
 {
 
 	Matrix resultante = (*this) - rhs;
@@ -295,7 +296,7 @@ Matrix<T>& Matrix<T>::operator-=(const T& rhs)
 // Sobrescrição com mutliplicação de escalar
 template<typename T>
 template<typename U>
-Matrix<T>& Matrix<T>::operator*=(const T& rhs)
+Matrix<decltype(T() + U())> Matrix<T>::operator*=(const U& rhs) 
 {
 
 	Matrix resultante = (*this) * rhs;
@@ -308,29 +309,12 @@ Matrix<T>& Matrix<T>::operator*=(const T& rhs)
 // Sobrescrição com divisão de escalar
 template<typename T>
 template<typename U>
-Matrix<T>& Matrix<T>::operator/=(const T& rhs)
+Matrix<decltype(T() + U())> Matrix<T>::operator/=(const U& rhs)
 {
 
 	Matrix resultante = (*this) / rhs;
 
 	*this = resultante;
-
-	return resultante;
-}
-
-
-// Multiplicação de matriz por vetor
-template<typename T>
-template<typename U>
-std::vector<T> Matrix<T>::operator*(const std::vector<T>& rhs)
-{
-	std::vector<T> resultante(rhs.size(), decltype(T() + U())());
-
-	for (unsigned i = 0; i < this->rows; i++) {
-		for (unsigned j = 0; j < this->cols; j++) {
-			resultante[i] += this->mat[i][j] * rhs[j];
-		}
-	}
 
 	return resultante;
 }
@@ -376,7 +360,6 @@ unsigned Matrix<T>::get_cols() const
 	return this->cols;
 }
 
-
 template<typename T>
 std::ostream& operator<<(std::ostream& os, const Matrix<T>& rhs)
 {
@@ -387,4 +370,32 @@ std::ostream& operator<<(std::ostream& os, const Matrix<T>& rhs)
 		os << std::endl;
 	}
 	return os;
+}
+
+template<typename T, typename U>
+Matrix<decltype(T() + U())> operator+(const U& lhs, const Matrix<T>& rhs)
+{
+	Matrix<decltype(T() + U())> resultante(this->rows, this->cols, decltype(T() + U())());
+
+	for (unsigned i = 0; i < this->rows; i++) {
+		for (unsigned j = 0; j < this->cols; j++) {
+			resultante(i, j) = this->mat[i][j] + rhs;
+		}
+	}
+
+	return resultante;
+}
+
+template<typename T, typename U>
+Matrix<decltype(T() + U())> operator*(const U& lhs, const Matrix<T>& rhs)
+{
+	Matrix<decltype(T() + U())> resultante(this->rows, this->cols, decltype(T() + U())());
+
+	for (unsigned i = 0; i < rhs.get_rows(); i++) {
+		for (unsigned j = 0; j < this->cols; j++) {
+			resultante(i, j) = this->mat[i][j] * rhs;
+		}
+	}
+
+	return resultante;
 }
