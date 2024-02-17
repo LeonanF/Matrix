@@ -92,6 +92,6 @@ std::ostream& operator<<(std::ostream& os, const Matrix<T>& rhs);
 template<typename T, typename U>
 Matrix<decltype(T() + U())> operator+(const U& lhs, const Matrix<T>& rhs);
 
-// Sobrecarga do operador para permitir adicionar um escalar à esquerda da matriz
+// Sobrecarga do operador para permitir multiplicar um escalar à esquerda da matriz
 template<typename T, typename U>
 Matrix<decltype(T() + U())> operator*(const U& lhs, const Matrix<T>& rhs);

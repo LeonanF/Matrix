@@ -360,6 +360,7 @@ unsigned Matrix<T>::get_cols() const
 	return this->cols;
 }
 
+// Sobrecarga do operador de saída
 template<typename T>
 std::ostream& operator<<(std::ostream& os, const Matrix<T>& rhs)
 {
@@ -372,30 +373,27 @@ std::ostream& operator<<(std::ostream& os, const Matrix<T>& rhs)
 	return os;
 }
 
+// Sobrecarga do operador para permitir adicionar um escalar à esquerda da matriz
 template<typename T, typename U>
 Matrix<decltype(T() + U())> operator+(const U& lhs, const Matrix<T>& rhs)
 {
-	Matrix<decltype(T() + U())> resultante(this->rows, this->cols, decltype(T() + U())());
+	Matrix<decltype(T() + U())> resultante(rhs.get_rows(), rhs.get_cols(), decltype(T() + U())());
 
-	for (unsigned i = 0; i < this->rows; i++) {
-		for (unsigned j = 0; j < this->cols; j++) {
-			resultante(i, j) = this->mat[i][j] + rhs;
-		}
-	}
+	resultante = rhs;
+	resultante += lhs;
 
 	return resultante;
 }
 
+// Sobrecarga do operador para permitir multiplicar um escalar à esquerda da matriz
 template<typename T, typename U>
 Matrix<decltype(T() + U())> operator*(const U& lhs, const Matrix<T>& rhs)
 {
-	Matrix<decltype(T() + U())> resultante(this->rows, this->cols, decltype(T() + U())());
 
-	for (unsigned i = 0; i < rhs.get_rows(); i++) {
-		for (unsigned j = 0; j < this->cols; j++) {
-			resultante(i, j) = this->mat[i][j] * rhs;
-		}
-	}
+	Matrix<decltype(T() + U())> resultante(rhs.get_rows(), rhs.get_cols(), decltype(T() + U())());
+
+	resultante = rhs;
+	resultante *= lhs;
 
 	return resultante;
 }
